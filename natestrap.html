@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<style>
+body {margin:0px;background-color:white;}
+*{box-sizing:border-box;}
+a {text-decoration:none;color:inherit}
+</style>
+<body>
+<nav  menu='myLists'  class='N8sMenu' id='nono'></nav>
+</body> 
+</html>
+<script>
+myLists = [
+{
+mnName:'Main Menu',
+mnDir:'horiztonal',
+detStyle:false,
+menuStyles: [{
+    mainBtWidth: '150px', //width of each main button
+    mainBtColorA: 'gray', //initial color of button background
+    mainBtColorB: 'green', //hover color of button background
+    mainBtTxtColorA: 'white', //initial text color
+    mainBtTxtColorB: 'white', //hover color of text color
+    mainBtFontSize: '15px', //main button font size
+    mainBtFontAlign: 'center',
+    mainBtFontFam: "'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif" //font family
+}],
+menu: [
+    {
+    bt:'HOME',
+    href:'',
+    tar:'_self',
+    drop:true,
+    subTxt: [
+        {dpBt:'dropA',link:'http://www.google.com',tar:'_blank'},
+        {dpBt:'dropB',link:'http://www.google.com',tar:'_blank'},
+        {dpBt:'dropC',link:'http://www.google.com',tar:'_blank'}
+    ]
+    },
+    {
+    bt:'ABOUT',
+    href:'AboutLink',
+    tar:'_blank',
+    drop:true,
+    subTxt: [
+        {dpBt:'dropD',link:'http://www.google.com',tar:'_blank'},
+        {dpBt:'dropE',link:'http://www.google.com',tar:'_blank'},
+        {dpBt:'dropF',link:'http://www.google.com',tar:'_blank'}
+    ]
+    },
+    {
+    bt:'CONTACT US',
+    href:'AboutLink',
+    tar:'_blank',
+    drop:true,
+    subTxt: [
+        {dpBt:'CONTA',link:'http://www.google.com',tar:'_blank'},
+        {dpBt:'CONTB',link:'http://www.google.com',tar:'_blank'},
+        {dpBt:'CONTC',link:'http://www.google.com',tar:'_blank'}
+    ]
+    }
+]
+}
+]
+//container = {'myList': myList}
+var frameIt = false;
+var myChoice = '*';
+$(document).ready(function() {
+    $(myChoice).each(function() {
+        if($(this).attr('menu')) {
+            $(this).attr( "menu", function(a, doo) {
+                myClassName = $(this).attr('class').split(' ')[0];
+                myArray = eval(doo);
+                $.each(myArray, function(b, put) {
+                    $.each(put.menuStyles, function(w, sty) {
+                        if (sty.mainBtWidth == 'full') {
+                            btWidth = 100/put.menu.length + '%';
+                            console.log(btWidth)
+                        } else {
+                            btWidth = sty.mainBtWidth;
+                        }
+                        btBackA = sty.mainBtColorA;
+                        btBackB = sty.mainBtColorB;
+                        btClrA = sty.mainBtTxtColorA;
+                        btClrB = sty.mainBtTxtColorB;
+                        btFntSz = sty.mainBtFontSize;
+                        btFntFm = sty.mainBtFontFam;
+                        btFntAl = sty.mainBtFontAlign;
+                    })
+                    $.each(put.menu, function(z, btt) {
+                        if(btt.drop) {
+                            dropBt = '';
+                            drpName = btt.bt.replace(' ','');
+                            console.log(drpName);
+                            $.each(btt.subTxt, function(y, drp) {
+                                dropBt += '<li class="dropBt" id="'+drp.dpBt+'"><a href="'+drp.link+'" target="'+drp.tar+'">'+drp.dpBt+'</a></li>';
+                            })
+                            dropper = '<ul class="drop" id="'+btt.bt.replace(' ','')+'drop">'+dropBt+'</ul>';
+                        } else {
+                            dropper = '';
+                        }
+                        mainBt = '<ul class="btCont"><li class="button" id="'+btt.bt.replace(' ','')+'">'+btt.bt+dropper+'</li></ul>';
+                        //mainBt = '<ul class="btCont" id="'+btt.bt+'"><li class="button" id="'+btt.bt+'"><a href="'+btt.href+'" target="'+btt.tar+'">'+btt.bt+'</a>'+dropper+'</li></ul>';
+                        $('.'+myClassName).append(mainBt);
+                        aa = $('.'+myClassName);
+                        bb = $('.'+myClassName+' .btCont');
+                        cc = $('.'+myClassName+' .btCont .button');
+                        dd = $('.'+myClassName+' .btCont .button .drop');
+                        ee = $('.'+myClassName+' .btCont .button .drop .dropBt');
+                        if(put.detStyle) {
+                            
+                            $(aa).css({
+
+                            })
+                            $(bb).css({
+                                'width':btWidth,
+                                'background-color':btBackA,
+                                'color':btClrA,
+                                'font-size':btFntSz,
+                                'font-family':btFntFm,
+                                'text-align':btFntAl,
+                                'margin':'0px',
+                                'padding':'0px 5px',
+                                'list-style-type':'none',
+                                'display':'inline-block',
+                                'position':'relative'
+                            })
+                            $(dd).css({
+                                'margin':'0px',
+                                'padding':'0px',
+                                'list-style-type':'none',
+                                'display':'none',
+                                'background-color':'gray',
+                                'position':'absolute',
+                                'top':'100%',
+                                'left':'0%',
+                                'width':'100%',
+                                'z-index':'9999'
+                            })
+                            $(ee).css({
+                                'color':'black'
+                            })
+                        } else {
+                            $(dd).css({'display':'none'})
+                        }
+                        
+                        $('#'+btt.bt.replace(' ','')).on('mouseover', function() {
+                            $('#'+btt.bt.replace(' ','')+'drop.drop').show();
+                        })
+                        $('#'+btt.bt.replace(' ','')).on('mouseout', function() {
+                            $('#'+btt.bt.replace(' ','')+'drop.drop').hide();
+                        })
+                    })
+                })
+            })
+        }
+    })
+})
+$(document).ready(scoves);
+$(window).on('resize',scoves);
+function scoves() { 
+    $(myChoice).each(function(val) {
+        if($(this).attr('pos')) {
+            $(this).parent('*').css({'position':'relative','overflow':'hidden'});
+            $(this).css({'position':'absolute'})
+            $(this).attr( "pos", function(d, inp) {
+                var atA = inp[0];
+                var atB = inp[1];
+                switch(atA) {
+                    case 't': var top = '0%'; var bottom = 'null'; var y = '0%'; break;
+                    case 'b': var top = 'null'; var bottom = '0%'; var y = '0%'; break;
+                    case 'c': var top = '50%'; var bottom = 'null'; var y = '-50%'; break;
+                    default: var top = '50%'; var bottom = 'null'; var y = '-50%'; break;
+                }
+                switch(atB) {
+                    case 'l': var left = '0%'; var right = 'null'; var x = '0%'; break;
+                    case 'r': var left = 'null'; var right = '0%'; var x = '0%'; break;
+                    case 'c': var left = '50%'; var right = 'null'; var x = '-50%'; break;
+                    default: var left = '50%'; var right = 'null'; var x = '-50%'; break;
+                }
+                $(this).css({'top':top,'bottom':bottom,'left':left,'right':right,'transform': "translate(" + x + ", " + y + ")"})
+            })
+        }
+        if (frameIt) {$(this).css({'background-color':'none','outline':'0.001em solid #ccc','outline-offset':'0px','margin':'0px','padding':'0px'})}
+        if($(this).attr('scov')) {
+            $(this).css({'display':'inline-block','float':'left'})
+            $(this).attr( "scov", function( i, val ) {
+                getSize(val);
+                $(this).parent('.cont').css('overflow','hidden');
+                $(this).css({'width':mySize + '%','height':'100%','overflow':'hidden'})
+            });
+        }
+    })
+}
+function getSize(val) {
+    if($(window).width() >= 1024) {
+        mySize = val.split(' ')[2];
+    } else if ($(window).width() <= 1024 && $(window).width() >= 550) {
+        mySize = val.split(' ')[1];
+    } else {
+        mySize = val.split(' ')[0];
+    }
+}
+</script>
