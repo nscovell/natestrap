@@ -3,11 +3,13 @@ This is a framework that I am constantly working on. For a person that takes sim
 
 Grid control
 Ok, so let's say you have three divs and want them to be spaced out across the page:
+/*
 <div class='parent'>
 <div class='child'>divA</div>
 <div class='child'>divB</div>
 <div class='child'>divC</div>
 </div>
+*/
 
 Instead of using CSS and annoying media queries, all someone has to do is input a property called 'pos' in each object like this:
 <div>
