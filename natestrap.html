@@ -17,7 +17,7 @@ myLists = [
 {
 mnName:'Main Menu',
 mnDir:'horiztonal',
-detStyle:false,
+detStyle:true,
 menuStyles: [{
     mainBtWidth: 'full', //width of each main button, you can make it a number or full
     mainBtColorA: 'gray', //initial color of button background
@@ -52,14 +52,14 @@ menu: [
     ]
     },
     {
-    bt:'CONTACT US',
+    bt:'NEWS & MEDIA',
     href:'AboutLink',
     tar:'_blank',
     drop:true,
     subTxt: [
-        {dpBt:'CONTA',link:'http://www.google.com',tar:'_blank'},
-        {dpBt:'CONTB',link:'http://www.google.com',tar:'_blank'},
-        {dpBt:'CONTC',link:'http://www.google.com',tar:'_blank'}
+        {dpBt:'NEWSA',link:'http://www.google.com',tar:'_blank'},
+        {dpBt:'NEWSB',link:'http://www.google.com',tar:'_blank'},
+        {dpBt:'NEWSC',link:'http://www.google.com',tar:'_blank'}
     ]
     }
 ]
@@ -93,16 +93,15 @@ $(document).ready(function() {
                     $.each(put.menu, function(z, btt) {
                         if(btt.drop) {
                             dropBt = '';
-                            drpName = btt.bt.replace(' ','');
-                            console.log(drpName);
+                            clearItems = btt.bt.replace(/ |&/g, "").toString();
                             $.each(btt.subTxt, function(y, drp) {
                                 dropBt += '<li class="dropBt" id="'+drp.dpBt+'"><a href="'+drp.link+'" target="'+drp.tar+'">'+drp.dpBt+'</a></li>';
                             })
-                            dropper = '<ul class="drop" id="'+btt.bt.replace(' ','')+'drop">'+dropBt+'</ul>';
+                            dropper = '<ul class="drop" id="'+clearItems+'drop">'+dropBt+'</ul>';
                         } else {
                             dropper = '';
                         }
-                        mainBt = '<ul class="btCont"><li class="button" id="'+btt.bt.replace(' ','')+'">'+btt.bt+dropper+'</li></ul>';
+                        mainBt = '<ul class="btCont"><li class="button" id="'+clearItems+'">'+btt.bt+dropper+'</li></ul>';
                         //mainBt = '<ul class="btCont" id="'+btt.bt+'"><li class="button" id="'+btt.bt+'"><a href="'+btt.href+'" target="'+btt.tar+'">'+btt.bt+'</a>'+dropper+'</li></ul>';
                         $('.'+myClassName).append(mainBt);
                         aa = $('.'+myClassName);
@@ -147,11 +146,11 @@ $(document).ready(function() {
                             $(dd).css({'display':'none'})
                         }
                         
-                        $('#'+btt.bt.replace(' ','')).on('mouseover', function() {
-                            $('#'+btt.bt.replace(' ','')+'drop.drop').show();
+                        $('#'+clearItems).on('mouseover', function() {
+                            $('#'+btt.bt.replace(/ |&/g, "")+'drop.drop').show();
                         })
-                        $('#'+btt.bt.replace(' ','')).on('mouseout', function() {
-                            $('#'+btt.bt.replace(' ','')+'drop.drop').hide();
+                        $('#'+clearItems).on('mouseout', function() {
+                            $('#'+btt.bt.replace(/ |&/g, "")+'drop.drop').hide();
                         })
                     })
                 })
