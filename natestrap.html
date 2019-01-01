@@ -9,7 +9,7 @@ body {margin:0px;background-color:white;}
 a {text-decoration:none;color:inherit}
 </style>
 <body>
-<nav  menu='myLists'  class='N8sMenu' id='nono'></nav>
+<nav menu='myLists' class='dd'></nav>
 </body> 
 </html>
 <script>
@@ -19,14 +19,22 @@ mnName:'Main Menu',
 mnDir:'horiztonal',
 detStyle:true,
 menuStyles: [{
-    mainBtWidth: '350px', //width of each main button, you can make it a number or full
+    mainBtWidth: 'full', //width of each main button, you can make it a number or full
     mainBtColorA: 'gray', //initial color of button background
     mainBtColorB: 'green', //hover color of button background
     mainBtTxtColorA: 'white', //initial text color
     mainBtTxtColorB: 'white', //hover color of text color
     mainBtFontSize: '15px', //main button font size
     mainBtFontAlign: 'center',
-    mainBtFontFam: "'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif" //font family
+    mainBtFontFam: "'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif", //font family
+
+    //subBtWidth: 'full', //width of each main button, you can make it a number or full
+    subBtColorA: 'red', //initial color of button background
+    subBtColorB: 'green', //hover color of button background
+    subBtTxtColorA: 'blue', //initial text color
+    subBtTxtColorB: 'white', //hover color of text color
+    subBtFontSize: '15px', //main button font size
+    subBtFontAlign: 'center',
 }],
 menu: [
     {
@@ -78,7 +86,6 @@ $(document).ready(function() {
                     $.each(put.menuStyles, function(w, sty) {
                         if (sty.mainBtWidth == 'full') {
                             btWidth = 100/put.menu.length + '%';
-                            console.log(btWidth)
                         } else {
                             btWidth = sty.mainBtWidth;
                         }
@@ -89,6 +96,14 @@ $(document).ready(function() {
                         btFntSz = sty.mainBtFontSize;
                         btFntFm = sty.mainBtFontFam;
                         btFntAl = sty.mainBtFontAlign;
+
+                        subBackA = sty.subBtColorA;
+                        subBackB = sty.subBtColorB;
+                        subClrA = sty.subBtTxtColorA;
+                        subClrB = sty.subBtTxtColorB;
+                        subFntSz = sty.subBtFontSize;
+                        subFntFm = sty.subBtFontFam;
+                        subFntAl = sty.subBtFontAlign;
                     })
                     $.each(put.menu, function(z, btt) {
                         if(btt.drop) {
@@ -110,10 +125,6 @@ $(document).ready(function() {
                         dd = $('.'+myClassName+' .btCont .button .drop');
                         ee = $('.'+myClassName+' .btCont .button .drop .dropBt');
                         if(put.detStyle) {
-                            
-                            $(aa).css({
-
-                            })
                             $(bb).css({
                                 'width':btWidth,
                                 'background-color':btBackA,
@@ -122,10 +133,11 @@ $(document).ready(function() {
                                 'font-family':btFntFm,
                                 'text-align':btFntAl,
                                 'margin':'0px',
-                                'padding':'0px 5px',
+                                'padding':'0px 0px',
                                 'list-style-type':'none',
                                 'display':'inline-block',
-                                'position':'relative'
+                                'position':'relative',
+                                'transform':'all .5s'
                             })
                             $(dd).css({
                                 'margin':'0px',
@@ -140,16 +152,35 @@ $(document).ready(function() {
                                 'z-index':'9999'
                             })
                             $(ee).css({
-                                'color':'black'
+                                'width':'100%',
+                                'background-color':subBackA,
+                                'color':subClrA,
+                                'font-size':subFntSz,
+                                'font-family':subFntFm,
+                                'text-align':subFntAl,
+                                'margin':'0px',
+                                'padding':'0px 5px',
+                                'list-style-type':'none',
+                                'display':'inline-block',
                             })
                         } else {
                             $(dd).css({'display':'none'})
                         }
                         
                         $('#'+clearItems).on('mouseover', function() {
+                            $(this).css({
+                                'background-color':btBackB,
+                                'color':btClrB,
+                                'transition':'all .5s'
+                            })
                             $('#'+btt.bt.replace(/ |&/g, "")+'drop.drop').show();
                         })
                         $('#'+clearItems).on('mouseout', function() {
+                            $(this).css({
+                                'background-color':btBackA,
+                                'color':btClrA,
+                                'transition':'all .5s'
+                            })
                             $('#'+btt.bt.replace(/ |&/g, "")+'drop.drop').hide();
                         })
                     })
